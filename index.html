@@ -87,6 +87,15 @@
     </section>
   </main>
 
+  <!--  STEP 5 -->
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    window.TrackJS && TrackJS.install({ 
+    token: "0d3440cc84b24aab86d1f871873885e9"
+    // for more configuration options, see https://docs.trackjs.com
+  });
+  </script>
+                        
   <script>
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
@@ -102,6 +111,168 @@
 
     // Start your code here
     // You may move this JS to another file if you wish
+
+    /*
+     * STEP 2
+     * make buttons work for tracing errors
+     */
+    let consoleLogButton = errorBtns[0];
+    consoleLogButton.addEventListener('click', () =>{
+      console.log("Console Log Demo")
+    });
+
+    let consoleErrorButton = errorBtns[1];
+    consoleErrorButton.addEventListener('click', () =>{
+      console.error("Console Error Message Demo");
+    });
+
+    let consoleCountButton = errorBtns[2];
+    consoleCountButton.addEventListener('click', () =>{
+      console.count("Console Count Demo");
+    });
+
+    let consoleWarnButton = errorBtns[3];
+    consoleWarnButton.addEventListener('click', () =>{
+      console.warn("Console Warn Demo");
+    });
+
+    let consoleAssertButton = errorBtns[4];
+    consoleAssertButton.addEventListener('click', () =>{
+      let value1 = "hi";
+      let value2 = "hello";
+      let msg = "The values aren't the same";
+      console.assert(value1 == value2, {value1, value2, msg});
+    });
+
+    let consoleClearButton = errorBtns[5];
+    consoleClearButton.addEventListener('click', () =>{
+      console.clear();
+    });
+
+    let consoleDirButton = errorBtns[6];
+    consoleDirButton.addEventListener('click', () =>{
+      console.dir(consoleDirButton);
+    });
+
+    let consoleDirXMLButton = errorBtns[7];
+    consoleDirXMLButton.addEventListener('click', () =>{
+      console.dirxml(consoleDirXMLButton);
+    });
+
+    let consoleGroupStartButton = errorBtns[8];
+    consoleGroupStartButton.addEventListener('click', () =>{
+      console.group();
+    });
+
+    let consoleGroupEndButton = errorBtns[9];
+    consoleGroupEndButton .addEventListener('click', () =>{
+      console.groupEnd();
+    });
+
+    let consoleTableButton = errorBtns[10];
+    consoleTableButton.addEventListener('click', () =>{
+      var peopleTable = [
+        {
+          firstName: "Alessia",
+          lastName: "Welch",
+          birthday: "04/10/2003",
+        },
+        {
+          firstName: "Elisa",
+          lastName: "Welch",
+          birthday: "03/21/2006",
+        },
+        {
+          firstName: "Kim",
+          lastName: "Luga",
+          birthday: "05/04/2003",
+        }
+      ]; 
+      console.table(peopleTable);
+    });
+
+    let consoleStartTimerButton = errorBtns[11];
+    consoleStartTimerButton.addEventListener('click', () =>{
+      console.time();
+    });
+
+    let consoleEndTimerButton = errorBtns[12];
+    consoleEndTimerButton.addEventListener('click', () =>{
+      console.timeEnd();
+    });
+
+    function step1() {
+      step2();
+    }
+    function step2() {
+      step3();
+    }
+    function step3() {
+      step4();
+    }
+    function step4() {
+      console.trace();
+    }
+
+    let consoleTraceButton = errorBtns[13];
+    consoleTraceButton.addEventListener('click', () =>{
+      step1();
+    });
+
+    let consoleGlobalErrorButton = errorBtns[14];
+    consoleGlobalErrorButton.addEventListener('click', () =>{
+      boom();
+    });
+
+    /*
+     * STEP 3
+     * explore use of try, catch, finally
+     */
+     function ftoC(n) {
+      if (n < 0 || Math.trunc(n) != n) {
+        throw new Error("error here");
+      }
+      return (n - 32) * 5/9 ;
+    }
+
+    let start1 = Date.now();
+    try {
+      ftoC(-1);
+    } catch (err) {
+      alert("error occured: " + err.message);
+    } finally {
+      var diff1 = Date.now() - start1;
+    }
+    console.log(`execution took ${diff1}ms`);
+
+    /*
+     * STEP 4
+     * explore use of try, catch, finally, throw, and create new Error
+     */
+     class CustomError extends Error {
+      constructor(message) {
+        super(message);
+        this.name = "CustomError";
+      }
+    }
+
+    function cToF(n) {
+      if (n < 0 || Math.trunc(n) != n) {
+        throw new CustomError("Must not be negative, and also an integer.");
+      }
+      return (n * 9/5) + 32;
+    }
+
+    let start2 = Date.now();
+    try {
+      cToF(-1);
+    } catch (err) {
+      alert("error occured: " + err.message );
+    } finally {
+      var diff2 = Date.now() - start2;
+    }
+    console.log(`execution took ${diff2}ms`);
+
   </script>
 </body>
 
